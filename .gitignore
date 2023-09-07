@@ -132,3 +132,7 @@ dist
 node_modules
 build
 .DS_Store
+
+# SQL Server files
+*.mdf
+*.ldf
