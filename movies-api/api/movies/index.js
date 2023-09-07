@@ -1,24 +1,28 @@
 import express from 'express';
 import uniqid from 'uniqid';
-import { movies, movieReviews, movieDetails } from './moviesData';
+import movieModel from './movieModel';
+// import { movies, movieReviews, movieDetails } from './moviesData';
+import { getUpcomingMovies } from '../tmdb-api';
+import asyncHandler from 'express-async-handler';
 
 const router = express.Router(); 
-router.get('/', (req, res) => {
-    res.json(movies);
-});
+
+// GET all movies
+router.get('/', asyncHandler(async (req, res) => {
+    const movies = await movieModel.find();
+    res.status(200).json(movies);
+}));
 
 // Get movie details
-router.get('/:id', (req, res) => {
+router.get('/:id', asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
-    if (movieDetails.id == id) {
-        res.status(200).json(movieDetails);
+    const movie = await movieModel.findByMovieDBId(id);
+    if (movie) {
+        res.status(200).json(movie);
     } else {
-        res.status(404).json({
-            message: 'The resource you requested could not be found.',
-            status_code: 404
-        });
+        res.status(404).json({message: 'The resource you requested could not be found.', status_code: 404});
     }
-});
+}));
 
 // Get movie reviews
 router.get('/:id/reviews', (req, res) => {
@@ -51,5 +55,11 @@ router.post('/:id/reviews', (req, res) => {
         });
     }
 });
+
+// GET upcoming
+router.get('/tmdb/upcoming', asyncHandler( async(req, res) => {
+    const upcomingMovies = await getUpcomingMovies();
+    res.status(200).json(upcomingMovies);
+}));
 
 export default router;
