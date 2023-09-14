@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Redirect, Switch, Link } from "react-router-dom";
-import { PublicPage, Movies, Profile, HomePage } from "./pages";
+import { PublicPage, Movies, Profile, HomePage, Upcoming } from "./pages";
 import LoginPage from "./loginPage";
 import AuthProvider from "./authContext";
 import PrivateRoute from "./privateRoute";
