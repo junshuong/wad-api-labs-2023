@@ -25,6 +25,9 @@ const App = () => {
             <Link to="/movies">Movies</Link>
           </li>
           <li>
+            <Link to="/upcoming">Upcoming Movies</Link>
+          </li>
+          <li>
             <Link to="/profile">Profile</Link>
           </li>
         </ul>
@@ -35,6 +38,7 @@ const App = () => {
             <Route path="/login" component={LoginPage} />
             <Route path="/signup" component={SignUpPage} />
             <PrivateRoute path="/movies" component={Movies} />
+            <PrivateRoute path="/upcoming" component={Movies} />
             <PrivateRoute path="/profile" component={Profile} />
             <Redirect from="*" to="/" />
           </Switch>
